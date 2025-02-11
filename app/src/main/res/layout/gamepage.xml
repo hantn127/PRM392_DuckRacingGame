@@ -1,0 +1,212 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:id="@+id/GamePage"
+    android:background="@drawable/bg_water">
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🏁 Duck Racing! 🦆"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:fontFamily="cursive"
+        android:textColor="#FFD700"
+        android:layout_gravity="center"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Balance -->
+    <TextView
+        android:id="@+id/tvInitialBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="💰 Balance: $1000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"/>
+    <!-- Name -->
+    <TextView
+        android:id="@+id/nameid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🏆 Name: khang"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"/>
+    <!-- Khu vực đua vịt -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- Hàng đua vịt -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp">
+
+            <CheckBox
+                android:id="@+id/cbBet1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:buttonTint="#FFFFFF"
+                android:layout_marginEnd="8dp"/>
+
+            <SeekBar
+                android:id="@+id/seekBarRace1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/seekbar_water"
+                android:thumb="@drawable/vit3"/>
+
+            <EditText
+                android:id="@+id/etBet1"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:padding="8dp"
+                android:background="@drawable/input_background"
+                android:hint="Bet $"
+                android:inputType="number"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <!-- Đua vịt 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp">
+
+            <CheckBox
+                android:id="@+id/cbBet2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:buttonTint="#FFFFFF"
+                android:layout_marginEnd="8dp"/>
+
+            <SeekBar
+                android:id="@+id/seekBarRace2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/seekbar_water"
+                android:thumb="@drawable/vit3"/>
+
+            <EditText
+                android:id="@+id/etBet2"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:padding="8dp"
+                android:background="@drawable/input_background"
+                android:hint="Bet $"
+                android:inputType="number"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+        <!-- Đua vịt 3 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp">
+
+            <CheckBox
+                android:id="@+id/cbBet3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:buttonTint="#FFFFFF"
+                android:layout_marginEnd="8dp"/>
+
+            <SeekBar
+                android:id="@+id/seekBarRace3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/seekbar_water"
+                android:thumb="@drawable/vit3"/>
+
+            <EditText
+                android:id="@+id/etBet3"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:padding="8dp"
+                android:background="@drawable/input_background"
+                android:hint="Bet $"
+                android:inputType="number"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/btnStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/button_duck"
+                android:padding="12dp"
+                android:minHeight="48dp"
+                android:text="Start Race! 🏁"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_duck"
+                android:padding="12dp"
+                android:minHeight="48dp"
+                android:text="Reset 🔄"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
