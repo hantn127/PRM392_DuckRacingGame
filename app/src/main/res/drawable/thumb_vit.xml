@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap
+            android:src="@drawable/vit"
+            android:gravity="fill"
+            android:tileMode="repeat"
+            android:layout_width="10dp"
+            android:layout_height="10dp"/>
+    </item>
+</layer-list>

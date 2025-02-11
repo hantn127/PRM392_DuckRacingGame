@@ -1,0 +1,24 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Nền màu xanh dương đại diện cho nước -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#2196F3"/> <!-- Màu nước xanh -->
+            <size android:height="16dp"/>
+            <corners android:radius="8dp"/>
+        </shape>
+    </item>
+
+    <!-- Hiệu ứng sóng trên đường đua -->
+    <item android:top="2dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="0"
+                android:startColor="#B3E5FC"
+                android:centerColor="#81D4FA"
+                android:endColor="#4FC3F7"
+                android:type="linear"/>
+            <size android:height="8dp"/>
+            <corners android:radius="8dp"/>
+        </shape>
+    </item>
+</layer-list>
