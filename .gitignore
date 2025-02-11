@@ -1,0 +1,16 @@
+# .gitignore for Android Studio project
+
+# Ignore build and cache files
+/build
+/.idea
+/.gradle
+/local.properties
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore local libraries and IDE settings
+*.iml
+.gradle
+/captures
