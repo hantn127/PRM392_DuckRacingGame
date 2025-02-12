@@ -5,51 +5,77 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:gravity="center"
-    android:background="@color/white"
+    android:background="@drawable/background_duck_race"
     android:id="@+id/main">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign Up"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:shadowColor="#FBC02D"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
         android:layout_marginBottom="20dp"/>
 
     <EditText
         android:id="@+id/edtUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:inputType="text"/>
+        android:hint="Enter your Duck Name"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="@drawable/duck_edittext_background"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
 
     <EditText
         android:id="@+id/edtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"/>
+        android:hint="Choose a Secret Code"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:background="@drawable/duck_edittext_background"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
 
     <EditText
         android:id="@+id/edtConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"/>
+        android:hint="Confirm Secret Code"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:background="@drawable/duck_edittext_background"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"/>
 
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
-        android:layout_marginTop="20dp"/>
+        android:text="Join the Race!"
+        android:layout_marginTop="20dp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:background="@drawable/button_duck_race"
+        android:padding="12dp"
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/txtAlreadyAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Already have an account? Log in"
-        android:textColor="@color/black"
-        android:layout_marginTop="10dp" />
-
+        android:text="Already a racer? Log in"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="16sp"
+        android:layout_marginTop="12dp"
+        android:clickable="true"/>
 </LinearLayout>
