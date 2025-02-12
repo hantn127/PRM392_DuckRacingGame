@@ -2,53 +2,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
+    android:gravity="center"
     android:padding="24dp"
-    android:background="@drawable/background_game"
-    android:id="@+id/main">
+    android:background="@drawable/background_duck_race">
 
+    <!-- Game Title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="24sp"
+        android:text="DUCK RACE LOGIN"
+        android:textSize="28sp"
         android:textStyle="bold"
+        android:textColor="#FFD700"
+        android:fontFamily="casual"
         android:layout_marginBottom="16dp"/>
 
+    <!-- Username Input -->
     <EditText
         android:id="@+id/edtUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:inputType="textEmailAddress"
+        android:hint="name"
+        android:inputType="text"
         android:padding="12dp"
-        android:background="@drawable/edittext_background"/>
+        android:background="@drawable/duck_edittext_background"
+        android:layout_marginBottom="8dp"/>
 
+    <!-- Password Input -->
     <EditText
         android:id="@+id/edtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="passcode"
         android:inputType="textPassword"
         android:padding="12dp"
-        android:background="@drawable/edittext_background"
-        android:layout_marginTop="8dp"/>
+        android:background="@drawable/duck_edittext_background"
+        android:layout_marginBottom="16dp"/>
 
+    <!-- Login Button -->
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_background"/>
+        android:text="Start Racing!"
+        android:textStyle="bold"
+        android:background="@drawable/duck_button_background"
+        android:textColor="#ffffff"
+        android:layout_marginBottom="12dp"/>
 
+    <!-- Sign Up Text -->
     <TextView
         android:id="@+id/txtNotAccountYet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don't have an account? Sign up"
-        android:textColor="@android:color/holo_blue_light"
+        android:text="No account yet? Sign up here!"
+        android:textColor="#00BFFF"
         android:layout_marginTop="12dp"
         android:clickable="true"/>
 </LinearLayout>
