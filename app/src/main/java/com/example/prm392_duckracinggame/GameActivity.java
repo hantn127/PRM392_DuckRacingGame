@@ -28,7 +28,8 @@ public class GameActivity extends AppCompatActivity {
     private TextView tvBalance;
     private TextView nameid;
 
-    private int balance = 1000; // Số dư ban đầu
+    private int balance; // Số dư hiện tại
+    private final int INITIAL_BALANCE = 1000; // Số dư ban đầu
     private boolean raceRunning = false;
     private Handler handler = new Handler();
     private Random random = new Random();
@@ -52,8 +53,9 @@ public class GameActivity extends AppCompatActivity {
         tvBalance = findViewById(R.id.tvInitialBalance);
         nameid = findViewById(R.id.nameid);
 
-        // Cập nhật số dư ban đầu
-        tvBalance.setText("💰 Balance: $" + balance);
+        // Thiết lập số dư ban đầu
+        balance = INITIAL_BALANCE;
+        updateBalanceDisplay();
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("nameid");
@@ -162,6 +164,9 @@ public class GameActivity extends AppCompatActivity {
             return;
         }
 
+        // **Vô hiệu hóa checkbox và ô nhập tiền khi cuộc đua bắt đầu**
+        setBetInputsEnabled(false);
+
         raceRunning = true;
         btnReset.setEnabled(false);
         btnStart.setEnabled(false);
@@ -253,7 +258,7 @@ public class GameActivity extends AppCompatActivity {
         if (cbBet3.isChecked() && winner == 3) balance += bet3;
         else if (cbBet3.isChecked()) balance -= bet3;
 
-        tvBalance.setText("💰 Balance: $" + balance);
+        updateBalanceDisplay();
     }
 
     private int getBetAmount(EditText etBet) {
@@ -278,12 +283,35 @@ public class GameActivity extends AppCompatActivity {
         etBet2.setEnabled(false);
         etBet3.setEnabled(false);
 
-        btnReset.setEnabled(true); // Vô hiệu hóa lại nút Reset
+        btnReset.setEnabled(false); // Vô hiệu hóa lại nút Reset
+
+        // **Reset lại số dư về giá trị ban đầu**
+        balance = INITIAL_BALANCE;
+        updateBalanceDisplay();
+
+        // **Cho phép chọn checkbox và nhập tiền lại sau khi reset**
+        setBetInputsEnabled(true);
     }
 
     private void resetSeekBars() {
         seekBar1.setProgress(0);
         seekBar2.setProgress(0);
         seekBar3.setProgress(0);
+    }
+
+    // **Bật/Tắt tất cả checkbox và ô nhập cược**
+    private void setBetInputsEnabled(boolean enabled) {
+        cbBet1.setEnabled(enabled);
+        cbBet2.setEnabled(enabled);
+        cbBet3.setEnabled(enabled);
+
+        etBet1.setEnabled(enabled && cbBet1.isChecked());
+        etBet2.setEnabled(enabled && cbBet2.isChecked());
+        etBet3.setEnabled(enabled && cbBet3.isChecked());
+    }
+
+    // **Cập nhật số dư trên giao diện**
+    private void updateBalanceDisplay() {
+        tvBalance.setText("💰 Balance: $" + balance);
     }
 }
