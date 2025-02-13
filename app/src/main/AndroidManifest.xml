@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRM392_DuckRacingGame"
         tools:targetApi="31">
+      
         <activity android:name=".SignUpActivity"></activity>
         <activity
             android:name=".SignInActivity"
