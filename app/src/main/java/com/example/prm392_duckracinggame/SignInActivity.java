@@ -1,20 +1,14 @@
 package com.example.prm392_duckracinggame;
 
-import android.accounts.Account;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -51,7 +45,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
             for(UserAccount user : listAcc) {
                 if(TextUtils.equals(user.getUserName().toString(), tmpAcc)) {
-                    Toast.makeText(this, "Add new user successfully!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "User already exist!", Toast.LENGTH_LONG).show();
                     break;
                 }
             }
@@ -59,7 +53,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             int newId = listAcc.size() + 1;
             UserAccount newUser = new UserAccount(newId, tmpAcc, tmpPass);
             listAcc.add(newUser);
-            Toast.makeText(this, "!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Add new user successfully!", Toast.LENGTH_LONG).show();
         }
 
         notAccYet.setOnClickListener(this);
