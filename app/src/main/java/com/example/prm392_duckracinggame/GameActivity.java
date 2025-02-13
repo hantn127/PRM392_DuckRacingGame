@@ -1,5 +1,6 @@
 package com.example.prm392_duckracinggame;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -16,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
+    private MediaPlayer mediaPlayer;
+    private MediaPlayer soundEffect;
 
     private SeekBar seekBar1, seekBar2, seekBar3;
     private Button btnStart, btnReset;
@@ -62,7 +65,61 @@ public class GameActivity extends AppCompatActivity {
         cbBet1.setOnCheckedChangeListener((buttonView, isChecked) -> toggleBetInput(etBet1, isChecked));
         cbBet2.setOnCheckedChangeListener((buttonView, isChecked) -> toggleBetInput(etBet2, isChecked));
         cbBet3.setOnCheckedChangeListener((buttonView, isChecked) -> toggleBetInput(etBet3, isChecked));
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.music);
+        mediaPlayer.setLooping(true); // Lặp lại nhạc
+        mediaPlayer.setVolume(1.0f, 1.0f); // Âm lượng tối đa
+        mediaPlayer.start();
+
+        soundEffect = MediaPlayer.create(this,R.raw.soundeffect);
+        Button button = findViewById(R.id.btnStart);
+        Button button2 = findViewById(R.id.btnReset);
+        CheckBox cb1 = findViewById(R.id.cbBet1);
+        CheckBox cb2 = findViewById(R.id.cbBet2);
+        CheckBox cb3= findViewById(R.id.cbBet3);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Phát sound effect
+                soundEffect.start();
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Phát sound effect
+                soundEffect.start();
+            }
+        });
+        cb1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Phát sound effect
+                soundEffect.start();
+            }
+        });
+        cb2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Phát sound effect
+                soundEffect.start();
+            }
+        });
+
+
+        cb3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Phát sound effect
+                soundEffect.start();
+            }
+        });
+
+
     }
+
 
     // Hàm bật/tắt ô nhập cược khi chọn checkbox
     private void toggleBetInput(EditText betInput, boolean isChecked) {
