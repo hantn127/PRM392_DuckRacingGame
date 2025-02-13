@@ -33,10 +33,10 @@ public class ResultActivity extends AppCompatActivity {
             int winnings = bundle.getInt("winnings");
             int lostAmount = bundle.getInt("lostAmount");
             int balance = bundle.getInt("balance");
-            tvWinningDuck.setText("\uD83C\uDFC1 Winning Duck: #" + winnerDuck);
-            tvAmountWon.setText("\uD83D\uDCB0 You Won: " + winnings);
-            tvAmountLost.setText("\uD83D\uDCB0 You Lost: " + lostAmount);
-            tvFinalBalance.setText("\uD83C\uDFE6 Remaining Balance: " + balance);
+            tvWinningDuck.setText("🏁 Winning Duck: #" + winnerDuck);
+            tvAmountWon.setText("💰 You Won: $" + winnings);
+            tvAmountLost.setText("💵 You Lost: $" + lostAmount);
+            tvFinalBalance.setText("🏦 Remaining Balance: $" + balance);
             btnConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -63,16 +63,14 @@ public class GameActivity extends AppCompatActivity {
 
         btnStart.setOnClickListener(v -> startRace());
         btnReset.setOnClickListener(v -> resetGame());
-        btnReset.setEnabled(false); // Vô hiệu hóa nút Reset ban đầu
+        btnReset.setEnabled(false);
 
         // Xử lý khi chọn checkbox để bật/tắt ô nhập cược
         cbBet1.setOnCheckedChangeListener((buttonView, isChecked) -> toggleBetInput(etBet1, isChecked));
         cbBet2.setOnCheckedChangeListener((buttonView, isChecked) -> toggleBetInput(etBet2, isChecked));
         cbBet3.setOnCheckedChangeListener((buttonView, isChecked) -> toggleBetInput(etBet3, isChecked));
-
-
-
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -81,6 +79,15 @@ public class GameActivity extends AppCompatActivity {
             tvBalance.setText("💰 Balance: $" + balance);
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetGame(); // Reset game khi quay lại từ trang kết quả
+        btnReset.setEnabled(true);
+        btnStart.setEnabled(true);
+    }
+
     // Hàm bật/tắt ô nhập cược khi chọn checkbox
     private void toggleBetInput(EditText betInput, boolean isChecked) {
         if (isChecked) {
@@ -101,6 +108,14 @@ public class GameActivity extends AppCompatActivity {
         if (cbBet2.isChecked()) betCount++;
         if (cbBet3.isChecked()) betCount++;
 
+        // Kiểm tra nếu ít nhất một checkbox được chọn nhưng chưa nhập số tiền
+        if ((cbBet1.isChecked() && TextUtils.isEmpty(etBet1.getText().toString())) ||
+                (cbBet2.isChecked() && TextUtils.isEmpty(etBet2.getText().toString())) ||
+                (cbBet3.isChecked() && TextUtils.isEmpty(etBet3.getText().toString()))) {
+            Toast.makeText(this, "⚠️ Bạn phải nhập số tiền cược cho vịt đã chọn!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (betCount == 0) {
             Toast.makeText(this, "⚠️ Bạn phải đặt cược ít nhất 1 con vịt!", Toast.LENGTH_SHORT).show();
             return;
@@ -113,10 +128,9 @@ public class GameActivity extends AppCompatActivity {
             return;
         }
 
-
-
         raceRunning = true;
-        btnReset.setEnabled(false); // Chặn nút Reset khi đang đua
+        btnReset.setEnabled(false);
+        btnStart.setEnabled(false);
         resetSeekBars();
 
         new Thread(() -> {
@@ -224,7 +238,7 @@ public class GameActivity extends AppCompatActivity {
         etBet2.setEnabled(false);
         etBet3.setEnabled(false);
 
-        btnReset.setEnabled(false); // Vô hiệu hóa lại nút Reset
+        btnReset.setEnabled(true); // Vô hiệu hóa lại nút Reset
     }
 
     private void resetSeekBars() {
