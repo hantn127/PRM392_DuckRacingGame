@@ -51,7 +51,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
             for(UserAccount user : listAcc) {
                 if(TextUtils.equals(user.getUserName().toString(), tmpAcc)) {
-                    Toast.makeText(this, "User already exist!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Add new user successfully!", Toast.LENGTH_LONG).show();
                     break;
                 }
             }
@@ -59,7 +59,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             int newId = listAcc.size() + 1;
             UserAccount newUser = new UserAccount(newId, tmpAcc, tmpPass);
             listAcc.add(newUser);
-            Toast.makeText(this, "User already exist!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "!", Toast.LENGTH_LONG).show();
         }
 
         notAccYet.setOnClickListener(this);
