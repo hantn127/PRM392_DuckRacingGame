@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
 
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.music);
+        mediaPlayer = MediaPlayer.create(this, R.raw.chill);
 //        mediaPlayer.setLooping(true); // Lặp lại nhạc
 //        mediaPlayer.setVolume(1.0f, 1.0f); // Âm lượng tối đa
         mediaPlayer.start();
@@ -88,6 +88,28 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startMusic(); // Tiếp tục phát nhạc khi quay lại trang chính
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopMusic(); // Dừng nhạc khi thoát hoặc chuyển sang màn hình khác
+    }
+
+    private void startMusic() {
+        if (mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.chill);
+            mediaPlayer.setLooping(true); // Lặp lại nếu cần
+        }
+        if (!mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
     }
 
     private void stopMusic() {

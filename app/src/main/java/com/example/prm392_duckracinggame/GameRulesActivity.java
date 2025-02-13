@@ -26,9 +26,31 @@ public class GameRulesActivity  extends AppCompatActivity {
                 audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
 
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.music);
-        mediaPlayer.setLooping(true); // Lặp lại nhạc
-        mediaPlayer.setVolume(1.0f, 1.0f); // Âm lượng tối đa
+        mediaPlayer = MediaPlayer.create(this, R.raw.chill);
+//        mediaPlayer.setLooping(true); // Lặp lại nhạc
+//        mediaPlayer.setVolume(1.0f, 1.0f); // Âm lượng tối đa
         mediaPlayer.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopAndReleaseMediaPlayer();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopAndReleaseMediaPlayer();
+    }
+
+    private void stopAndReleaseMediaPlayer() {
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 }

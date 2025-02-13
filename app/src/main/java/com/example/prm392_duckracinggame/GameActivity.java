@@ -19,6 +19,7 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer2;
     private MediaPlayer soundEffect;
 
     private SeekBar seekBar1, seekBar2, seekBar3;
@@ -75,7 +76,7 @@ public class GameActivity extends AppCompatActivity {
         cbBet2.setOnCheckedChangeListener((buttonView, isChecked) -> toggleBetInput(etBet2, isChecked));
         cbBet3.setOnCheckedChangeListener((buttonView, isChecked) -> toggleBetInput(etBet3, isChecked));
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.music);
+        mediaPlayer = MediaPlayer.create(this, R.raw.chill);
 //        mediaPlayer.setLooping(true); // Lặp lại nhạc
 //        mediaPlayer.setVolume(1.0f, 1.0f); // Âm lượng tối đa
         mediaPlayer.start();
@@ -118,6 +119,8 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        stopMusic2(); // Dừng nhạc cuộc đua khi quay lại trang chính
+        startMusic();
         resetGame(); // Reset game khi quay lại từ trang kết quả
         btnReset.setEnabled(true);
         btnStart.setEnabled(true);
@@ -136,6 +139,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void startRace() {
         soundEffect.start();
+
         if (raceRunning) return; // Nếu đang chạy, không bắt đầu lại
 
         // Kiểm tra nếu ít nhất 1 vịt được đặt cược
@@ -148,21 +152,24 @@ public class GameActivity extends AppCompatActivity {
         if ((cbBet1.isChecked() && TextUtils.isEmpty(etBet1.getText().toString())) ||
                 (cbBet2.isChecked() && TextUtils.isEmpty(etBet2.getText().toString())) ||
                 (cbBet3.isChecked() && TextUtils.isEmpty(etBet3.getText().toString()))) {
-            Toast.makeText(this, "⚠️ Bạn phải nhập số tiền cược cho vịt đã chọn!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "⚠️ You must enter a bet amount for the selected duck!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (betCount == 0) {
-            Toast.makeText(this, "⚠️ Bạn phải đặt cược ít nhất 1 con vịt!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "⚠️ You must place a bet on at least one duck!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Kiểm tra nếu tổng cược không vượt quá số dư
         int totalBet = getBetAmount(etBet1) + getBetAmount(etBet2) + getBetAmount(etBet3);
         if (totalBet > balance) {
-            Toast.makeText(this, "⚠️ Tổng số tiền cược không thể vượt quá số dư!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "⚠️ The total bet amount cannot exceed your balance!", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        stopMusic();
+        startMusic2();
 
         // **Vô hiệu hóa checkbox và ô nhập tiền khi cuộc đua bắt đầu**
         setBetInputsEnabled(false);
@@ -225,18 +232,11 @@ public class GameActivity extends AppCompatActivity {
 
         int lostAmount = totalBet - winnings; // Số tiền thua
 
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null; // Giải phóng tài nguyên
-        }
+        stopMusic2();
 
         Intent intent = new Intent(GameActivity.this, ResultActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("winner_duck", winner);
-        bundle.putInt("bet1", bet1);
-        bundle.putInt("bet2", bet2);
-        bundle.putInt("bet3", bet3);
         bundle.putInt("winnings", winnings);
         bundle.putInt("lostAmount", lostAmount);
         bundle.putInt("balance", balance);
@@ -283,7 +283,7 @@ public class GameActivity extends AppCompatActivity {
         etBet2.setEnabled(false);
         etBet3.setEnabled(false);
 
-        btnReset.setEnabled(false); // Vô hiệu hóa lại nút Reset
+        btnReset.setEnabled(true); // Vô hiệu hóa lại nút Reset
 
         // **Reset lại số dư về giá trị ban đầu**
         balance = INITIAL_BALANCE;
@@ -313,5 +313,41 @@ public class GameActivity extends AppCompatActivity {
     // **Cập nhật số dư trên giao diện**
     private void updateBalanceDisplay() {
         tvBalance.setText("💰 Balance: $" + balance);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopMusic();
+        stopMusic2();// Dừng nhạc khi thoát hoặc chuyển sang màn hình khác
+    }
+
+    private void startMusic() {
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
+    }
+
+    private void stopMusic() {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
+    }
+
+    private void startMusic2() {
+        if (mediaPlayer2 == null) {
+            mediaPlayer2 = MediaPlayer.create(this, R.raw.music);
+            mediaPlayer2.setLooping(true); // Lặp lại nếu cần
+        }
+        if (!mediaPlayer2.isPlaying()) {
+            mediaPlayer2.start();
+        }
+    }
+
+
+    private void stopMusic2() {
+        if (mediaPlayer2 != null && mediaPlayer2.isPlaying()) {
+            mediaPlayer2.pause();
+        }
     }
 }

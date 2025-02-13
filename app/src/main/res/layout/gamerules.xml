@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="1️⃣ Use arrows to control the car.\n2️⃣ Avoid obstacles.\n3️⃣ Collect coins for bonus points."
+            android:text="11️⃣ Select the ducks you want to bet on.\n2️⃣ Enter the bet amount for each selected duck.\n3️⃣ The race starts, and the fastest duck wins!\n4️⃣ If your duck wins, you earn rewards based on your bet.\n5️⃣ If your duck loses, the bet amount will be deducted from your balance."
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:lineSpacingExtra="6dp"
