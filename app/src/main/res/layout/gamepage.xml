@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:id="@+id/GamePage"
-    android:background="@drawable/bg_water">
+    android:background="@drawable/bg11">
 
     <!-- Tiêu đề -->
     <TextView
@@ -28,7 +28,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:fontFamily="sans-serif"
-        android:textColor="#FFFFFF"
+        android:textColor="#0D620D"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"/>
     <!-- Name -->
@@ -40,7 +40,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:fontFamily="sans-serif"
-        android:textColor="#FFFFFF"
+        android:textColor="#0D620D"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"/>
     <!-- Khu vực đua vịt -->
@@ -81,7 +81,7 @@
 
             <EditText
                 android:id="@+id/etBet1"
-                android:layout_width="100dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:padding="8dp"
@@ -123,7 +123,7 @@
 
             <EditText
                 android:id="@+id/etBet2"
-                android:layout_width="100dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:padding="8dp"
@@ -164,7 +164,7 @@
 
             <EditText
                 android:id="@+id/etBet3"
-                android:layout_width="100dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:padding="8dp"
