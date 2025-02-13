@@ -13,7 +13,6 @@ public class GameRulesActivity  extends AppCompatActivity {
 
     private MediaPlayer mediaPlayer;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +30,5 @@ public class GameRulesActivity  extends AppCompatActivity {
         mediaPlayer.setLooping(true); // Lặp lại nhạc
         mediaPlayer.setVolume(1.0f, 1.0f); // Âm lượng tối đa
         mediaPlayer.start();
-
-
-
-
-
     }
 }

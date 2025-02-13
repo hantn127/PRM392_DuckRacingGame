@@ -1,6 +1,7 @@
 package com.example.prm392_duckracinggame;
 
 import android.media.MediaPlayer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -25,6 +26,7 @@ public class GameActivity extends AppCompatActivity {
     private CheckBox cbBet1, cbBet2, cbBet3;
     private EditText etBet1, etBet2, etBet3;
     private TextView tvBalance;
+    private TextView nameid;
 
     private int balance = 1000; // Số dư ban đầu
     private boolean raceRunning = false;
@@ -48,9 +50,14 @@ public class GameActivity extends AppCompatActivity {
         etBet2 = findViewById(R.id.etBet2);
         etBet3 = findViewById(R.id.etBet3);
         tvBalance = findViewById(R.id.tvInitialBalance);
+        nameid = findViewById(R.id.nameid);
 
         // Cập nhật số dư ban đầu
         tvBalance.setText("💰 Balance: $" + balance);
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("nameid");
+        nameid.setText("🏆 Name: " + name);
 
         // Vô hiệu hóa ô nhập tiền ban đầu
         etBet1.setEnabled(false);
@@ -59,7 +66,7 @@ public class GameActivity extends AppCompatActivity {
 
         btnStart.setOnClickListener(v -> startRace());
         btnReset.setOnClickListener(v -> resetGame());
-        btnReset.setEnabled(false); // Vô hiệu hóa nút Reset ban đầu
+        btnReset.setEnabled(false);
 
         // Xử lý khi chọn checkbox để bật/tắt ô nhập cược
         cbBet1.setOnCheckedChangeListener((buttonView, isChecked) -> toggleBetInput(etBet1, isChecked));
@@ -120,6 +127,22 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            balance = data.getIntExtra("balance", balance);
+            tvBalance.setText("💰 Balance: $" + balance);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetGame(); // Reset game khi quay lại từ trang kết quả
+        btnReset.setEnabled(true);
+        btnStart.setEnabled(true);
+    }
 
     // Hàm bật/tắt ô nhập cược khi chọn checkbox
     private void toggleBetInput(EditText betInput, boolean isChecked) {
@@ -141,6 +164,14 @@ public class GameActivity extends AppCompatActivity {
         if (cbBet2.isChecked()) betCount++;
         if (cbBet3.isChecked()) betCount++;
 
+        // Kiểm tra nếu ít nhất một checkbox được chọn nhưng chưa nhập số tiền
+        if ((cbBet1.isChecked() && TextUtils.isEmpty(etBet1.getText().toString())) ||
+                (cbBet2.isChecked() && TextUtils.isEmpty(etBet2.getText().toString())) ||
+                (cbBet3.isChecked() && TextUtils.isEmpty(etBet3.getText().toString()))) {
+            Toast.makeText(this, "⚠️ Bạn phải nhập số tiền cược cho vịt đã chọn!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (betCount == 0) {
             Toast.makeText(this, "⚠️ Bạn phải đặt cược ít nhất 1 con vịt!", Toast.LENGTH_SHORT).show();
             return;
@@ -154,7 +185,8 @@ public class GameActivity extends AppCompatActivity {
         }
 
         raceRunning = true;
-        btnReset.setEnabled(false); // Chặn nút Reset khi đang đua
+        btnReset.setEnabled(false);
+        btnStart.setEnabled(false);
         resetSeekBars();
 
         new Thread(() -> {
@@ -185,6 +217,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void determineWinner(int p1, int p2, int p3) {
+
         raceRunning = false;
         btnReset.setEnabled(true); // Cho phép bấm Reset
 
@@ -196,7 +229,32 @@ public class GameActivity extends AppCompatActivity {
         Toast.makeText(this, "🏆 Winner: Duck " + winner + "!", Toast.LENGTH_SHORT).show();
 
         updateBalance(winner);
+        int bet1 = getBetAmount(etBet1);
+        int bet2 = getBetAmount(etBet2);
+        int bet3 = getBetAmount(etBet3);
+        int totalBet = (cbBet1.isChecked() ? bet1 : 0) +
+                (cbBet2.isChecked() ? bet2 : 0) +
+                (cbBet3.isChecked() ? bet3 : 0);
+        int winnings = 0;
+        if (cbBet1.isChecked() && winner == 1) winnings += bet1 ; // Nhân đôi tiền thắng
+        if (cbBet2.isChecked() && winner == 2) winnings += bet2 ;
+        if (cbBet3.isChecked() && winner == 3) winnings += bet3 ;
+
+        int lostAmount = totalBet - winnings; // Số tiền thua
+
+        Intent intent = new Intent(GameActivity.this, ResultActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("winner_duck", winner);
+        bundle.putInt("bet1", bet1);
+        bundle.putInt("bet2", bet2);
+        bundle.putInt("bet3", bet3);
+        bundle.putInt("winnings", winnings);
+        bundle.putInt("lostAmount", lostAmount);
+        bundle.putInt("balance", balance);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
+
 
     private void updateBalance(int winner) {
         int bet1 = getBetAmount(etBet1);
@@ -236,7 +294,7 @@ public class GameActivity extends AppCompatActivity {
         etBet2.setEnabled(false);
         etBet3.setEnabled(false);
 
-        btnReset.setEnabled(false); // Vô hiệu hóa lại nút Reset
+        btnReset.setEnabled(true); // Vô hiệu hóa lại nút Reset
     }
 
     private void resetSeekBars() {

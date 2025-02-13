@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,11 +13,10 @@ import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+    private Button btnPlay;
+    private Button btnGameRules;
 
     private MediaPlayer mediaPlayer;
     private MediaPlayer soundEffect;
@@ -25,8 +25,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.homepage);
-        ImageView backgroundView = findViewById(R.id.backgroundView);
 
+        ImageView backgroundView = findViewById(R.id.backgroundView);
+        btnPlay = findViewById(R.id.btnPlay);
+        btnGameRules = findViewById(R.id.btnGameRules);
 
         AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
@@ -84,7 +86,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         animator.start();
+
+        btnGameRules.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GameRulesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("username");
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                intent.putExtra("nameid", name);
+                startActivity(intent);
+            }
+        });
     }
 }
