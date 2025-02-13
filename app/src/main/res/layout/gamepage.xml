@@ -76,12 +76,12 @@
                 android:layout_weight="1"
                 android:max="100"
                 android:progress="0"
-                android:progressDrawable="@drawable/seekbar_water"
+                android:progressDrawable="@drawable/race_background"
                 android:thumb="@drawable/vit3"/>
 
             <EditText
                 android:id="@+id/etBet1"
-                android:layout_width="100dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:padding="8dp"
@@ -118,12 +118,12 @@
                 android:layout_weight="1"
                 android:max="100"
                 android:progress="0"
-                android:progressDrawable="@drawable/seekbar_water"
+                android:progressDrawable="@drawable/race_background"
                 android:thumb="@drawable/vit3"/>
 
             <EditText
                 android:id="@+id/etBet2"
-                android:layout_width="100dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:padding="8dp"
@@ -159,12 +159,12 @@
                 android:layout_weight="1"
                 android:max="100"
                 android:progress="0"
-                android:progressDrawable="@drawable/seekbar_water"
+                android:progressDrawable="@drawable/race_background"
                 android:thumb="@drawable/vit3"/>
 
             <EditText
                 android:id="@+id/etBet3"
-                android:layout_width="100dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:padding="8dp"
