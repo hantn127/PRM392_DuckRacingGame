@@ -24,6 +24,8 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".GameRulesActivity"/>
         <activity android:name=".GameActivity"/>
+        <activity android:name=".ResultActivity"/>
+
     </application>
 
 </manifest>
