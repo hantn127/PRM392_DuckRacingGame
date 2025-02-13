@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/backgroundView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background" />
+
+    <TextView
+        android:id="@+id/gameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Racing Game"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="#03A9F4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"/>
+
+
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Play Game"
+        android:layout_centerInParent="true"
+        android:backgroundTint="#FF9800"
+        android:textColor="#FFF"
+        android:textSize="18sp"/>
+
+
+    <Button
+        android:id="@+id/btnGameRules"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Game Rules"
+        android:layout_below="@id/btnPlay"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#607D8B"
+        android:textColor="#FFF"
+        android:textSize="18sp"/>
+
+    <ImageView
+        android:id="@+id/duck"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/duck"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginStart="20dp"
+        android:visibility="invisible"/>
+
+</RelativeLayout>
