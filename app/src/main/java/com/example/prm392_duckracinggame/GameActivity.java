@@ -74,18 +74,20 @@ public class GameActivity extends AppCompatActivity {
         cbBet3.setOnCheckedChangeListener((buttonView, isChecked) -> toggleBetInput(etBet3, isChecked));
 
         mediaPlayer = MediaPlayer.create(this, R.raw.music);
-        mediaPlayer.setLooping(true); // Lặp lại nhạc
-        mediaPlayer.setVolume(1.0f, 1.0f); // Âm lượng tối đa
+//        mediaPlayer.setLooping(true); // Lặp lại nhạc
+//        mediaPlayer.setVolume(1.0f, 1.0f); // Âm lượng tối đa
         mediaPlayer.start();
 
         soundEffect = MediaPlayer.create(this,R.raw.soundeffect);
-        Button button = findViewById(R.id.btnStart);
-        Button button2 = findViewById(R.id.btnReset);
-        CheckBox cb1 = findViewById(R.id.cbBet1);
-        CheckBox cb2 = findViewById(R.id.cbBet2);
-        CheckBox cb3= findViewById(R.id.cbBet3);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        cbBet1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Phát sound effect
+                soundEffect.start();
+            }
+        });
+        cbBet2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Phát sound effect
@@ -93,38 +95,13 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        button2.setOnClickListener(new View.OnClickListener() {
+        cbBet3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Phát sound effect
                 soundEffect.start();
             }
         });
-        cb1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Phát sound effect
-                soundEffect.start();
-            }
-        });
-        cb2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Phát sound effect
-                soundEffect.start();
-            }
-        });
-
-
-        cb3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Phát sound effect
-                soundEffect.start();
-            }
-        });
-
-
     }
 
     @Override
@@ -156,6 +133,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void startRace() {
+        soundEffect.start();
         if (raceRunning) return; // Nếu đang chạy, không bắt đầu lại
 
         // Kiểm tra nếu ít nhất 1 vịt được đặt cược
@@ -242,6 +220,12 @@ public class GameActivity extends AppCompatActivity {
 
         int lostAmount = totalBet - winnings; // Số tiền thua
 
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null; // Giải phóng tài nguyên
+        }
+
         Intent intent = new Intent(GameActivity.this, ResultActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("winner_duck", winner);
@@ -254,7 +238,6 @@ public class GameActivity extends AppCompatActivity {
         intent.putExtras(bundle);
         startActivity(intent);
     }
-
 
     private void updateBalance(int winner) {
         int bet1 = getBetAmount(etBet1);
@@ -279,6 +262,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void resetGame() {
+        soundEffect.start();
         raceRunning = false;
         resetSeekBars();
 

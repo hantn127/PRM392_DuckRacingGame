@@ -1,22 +1,19 @@
 package com.example.prm392_duckracinggame;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+    private MediaPlayer soundEffectPlayer;
 
     private EditText userName;
     private EditText password;
@@ -31,6 +28,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        // Khởi tạo MediaPlayer với file sound effect
+        soundEffectPlayer = MediaPlayer.create(this, R.raw.soundeffect);
+
         userName = findViewById(R.id.edtUsername);
         password = findViewById(R.id.edtPassword);
         confirmPass = findViewById(R.id.edtConfirmPassword);
@@ -39,6 +39,25 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         alreadyAcc.setOnClickListener(this);
         signUp.setOnClickListener(this);
+
+        userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                soundEffectPlayer.start();
+            }
+        });
+        password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                soundEffectPlayer.start();
+            }
+        });
+        confirmPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                soundEffectPlayer.start();
+            }
+        });
     }
 
     private boolean checkInput() {
@@ -65,6 +84,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     public void SignUp() {
+        soundEffectPlayer.start();
         if(!checkInput()) {
             return;
         }
@@ -92,12 +112,20 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.btnSignUp) {
-
             SignUp();
         } else if (id == R.id.txtAlreadyAccount) {
             SignInForm();
         } else {
             throw new IllegalStateException("Unexpected value: " + id);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (soundEffectPlayer != null) {
+            soundEffectPlayer.release();
+            soundEffectPlayer = null;
+        }
+        super.onDestroy();
     }
 }

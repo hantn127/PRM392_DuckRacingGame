@@ -36,32 +36,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         mediaPlayer = MediaPlayer.create(this, R.raw.music);
-        mediaPlayer.setLooping(true); // Lặp lại nhạc
-        mediaPlayer.setVolume(1.0f, 1.0f); // Âm lượng tối đa
+//        mediaPlayer.setLooping(true); // Lặp lại nhạc
+//        mediaPlayer.setVolume(1.0f, 1.0f); // Âm lượng tối đa
         mediaPlayer.start();
 
-
-
         soundEffect = MediaPlayer.create(this,R.raw.soundeffect);
-        Button button = findViewById(R.id.btnPlay);
-        Button button2 = findViewById(R.id.btnGameRules);
 
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Phát sound effect
-                soundEffect.start();
-            }
-        });
-
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Phát sound effect
-                soundEffect.start();
-            }
-        });
         ObjectAnimator animator = ObjectAnimator.ofFloat(backgroundView, "translationY", -1000f, 0f);
         animator.setDuration(3000);
         animator.setRepeatCount(0);
@@ -91,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         btnGameRules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                stopMusic();
                 Intent intent = new Intent(MainActivity.this, GameRulesActivity.class);
                 startActivity(intent);
             }
@@ -101,10 +82,19 @@ public class MainActivity extends AppCompatActivity {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                stopMusic();
                 Intent intent = new Intent(MainActivity.this, GameActivity.class);
                 intent.putExtra("nameid", name);
                 startActivity(intent);
             }
         });
+    }
+
+    private void stopMusic() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 }
