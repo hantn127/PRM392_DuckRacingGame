@@ -20,18 +20,19 @@
         android:layout_marginBottom="12dp"/>
 
     <!-- Balance -->
+    <!-- Name -->
     <TextView
         android:id="@+id/tvInitialBalance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="💰 Balance: $1000"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif"
-        android:textColor="#FFFFFF"
         android:layout_gravity="center"
-        android:layout_marginBottom="16dp"/>
-    <!-- Name -->
+        android:layout_marginBottom="16dp"
+        android:fontFamily="sans-serif"
+        android:text="💰 Balance: $1000"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/nameid"
         android:layout_width="wrap_content"

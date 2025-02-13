@@ -1,6 +1,7 @@
 package com.example.prm392_duckracinggame;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
-
+    private MediaPlayer soundEffectPlayer;
     private EditText userName;
     private EditText password;
     private TextView notAccYet;
@@ -32,10 +33,26 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Khởi tạo MediaPlayer với file sound effect
+        soundEffectPlayer = MediaPlayer.create(this, R.raw.soundeffect);
+
         userName = findViewById(R.id.edtUsername);
         password = findViewById(R.id.edtPassword);
         notAccYet = findViewById(R.id.txtNotAccountYet);
         signIn = findViewById(R.id.btnLogin);
+
+        userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                soundEffectPlayer.start();
+            }
+        });
+        password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                soundEffectPlayer.start();
+            }
+        });
 
         Intent myIntent = getIntent();
         if (myIntent != null && myIntent.hasExtra("tmp")) {
@@ -91,12 +108,15 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     public void SignIn() {
+        soundEffectPlayer.start();
         if(!checkInput()) {
             return;
         }
 
         Toast.makeText(this, "Login successful!", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, MainActivity.class);
+        String name = userName.getText().toString();
+        intent.putExtra("username", name);
         startActivity(intent);
         finish();
     }
@@ -140,6 +160,15 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         public String getPassword() {
             return password;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (soundEffectPlayer != null) {
+            soundEffectPlayer.release();
+            soundEffectPlayer = null;
+        }
+        super.onDestroy();
     }
 }
 

@@ -1,5 +1,7 @@
 package com.example.prm392_duckracinggame;
 
+import android.media.MediaPlayer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -16,12 +18,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
+    private MediaPlayer mediaPlayer;
+    private MediaPlayer soundEffect;
 
     private SeekBar seekBar1, seekBar2, seekBar3;
     private Button btnStart, btnReset;
     private CheckBox cbBet1, cbBet2, cbBet3;
     private EditText etBet1, etBet2, etBet3;
     private TextView tvBalance;
+    private TextView nameid;
 
     private int balance; // Số dư hiện tại
     private final int INITIAL_BALANCE = 1000; // Số dư ban đầu
@@ -46,10 +51,15 @@ public class GameActivity extends AppCompatActivity {
         etBet2 = findViewById(R.id.etBet2);
         etBet3 = findViewById(R.id.etBet3);
         tvBalance = findViewById(R.id.tvInitialBalance);
+        nameid = findViewById(R.id.nameid);
 
         // Thiết lập số dư ban đầu
         balance = INITIAL_BALANCE;
         updateBalanceDisplay();
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("nameid");
+        nameid.setText("🏆 Name: " + name);
 
         // Vô hiệu hóa ô nhập tiền ban đầu
         etBet1.setEnabled(false);
@@ -58,12 +68,59 @@ public class GameActivity extends AppCompatActivity {
 
         btnStart.setOnClickListener(v -> startRace());
         btnReset.setOnClickListener(v -> resetGame());
-        btnReset.setEnabled(false); // Vô hiệu hóa nút Reset ban đầu
+        btnReset.setEnabled(false);
 
         // Xử lý khi chọn checkbox để bật/tắt ô nhập cược
         cbBet1.setOnCheckedChangeListener((buttonView, isChecked) -> toggleBetInput(etBet1, isChecked));
         cbBet2.setOnCheckedChangeListener((buttonView, isChecked) -> toggleBetInput(etBet2, isChecked));
         cbBet3.setOnCheckedChangeListener((buttonView, isChecked) -> toggleBetInput(etBet3, isChecked));
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.music);
+//        mediaPlayer.setLooping(true); // Lặp lại nhạc
+//        mediaPlayer.setVolume(1.0f, 1.0f); // Âm lượng tối đa
+        mediaPlayer.start();
+
+        soundEffect = MediaPlayer.create(this,R.raw.soundeffect);
+
+        cbBet1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Phát sound effect
+                soundEffect.start();
+            }
+        });
+        cbBet2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Phát sound effect
+                soundEffect.start();
+            }
+        });
+
+        cbBet3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Phát sound effect
+                soundEffect.start();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            balance = data.getIntExtra("balance", balance);
+            tvBalance.setText("💰 Balance: $" + balance);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetGame(); // Reset game khi quay lại từ trang kết quả
+        btnReset.setEnabled(true);
+        btnStart.setEnabled(true);
     }
 
     // Hàm bật/tắt ô nhập cược khi chọn checkbox
@@ -78,6 +135,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void startRace() {
+        soundEffect.start();
         if (raceRunning) return; // Nếu đang chạy, không bắt đầu lại
 
         // Kiểm tra nếu ít nhất 1 vịt được đặt cược
@@ -85,6 +143,14 @@ public class GameActivity extends AppCompatActivity {
         if (cbBet1.isChecked()) betCount++;
         if (cbBet2.isChecked()) betCount++;
         if (cbBet3.isChecked()) betCount++;
+
+        // Kiểm tra nếu ít nhất một checkbox được chọn nhưng chưa nhập số tiền
+        if ((cbBet1.isChecked() && TextUtils.isEmpty(etBet1.getText().toString())) ||
+                (cbBet2.isChecked() && TextUtils.isEmpty(etBet2.getText().toString())) ||
+                (cbBet3.isChecked() && TextUtils.isEmpty(etBet3.getText().toString()))) {
+            Toast.makeText(this, "⚠️ Bạn phải nhập số tiền cược cho vịt đã chọn!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if (betCount == 0) {
             Toast.makeText(this, "⚠️ Bạn phải đặt cược ít nhất 1 con vịt!", Toast.LENGTH_SHORT).show();
@@ -102,7 +168,8 @@ public class GameActivity extends AppCompatActivity {
         setBetInputsEnabled(false);
 
         raceRunning = true;
-        btnReset.setEnabled(false); // Chặn nút Reset khi đang đua
+        btnReset.setEnabled(false);
+        btnStart.setEnabled(false);
         resetSeekBars();
 
         new Thread(() -> {
@@ -133,6 +200,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void determineWinner(int p1, int p2, int p3) {
+
         raceRunning = false;
         btnReset.setEnabled(true); // Cho phép bấm Reset
 
@@ -144,6 +212,36 @@ public class GameActivity extends AppCompatActivity {
         Toast.makeText(this, "🏆 Winner: Duck " + winner + "!", Toast.LENGTH_SHORT).show();
 
         updateBalance(winner);
+        int bet1 = getBetAmount(etBet1);
+        int bet2 = getBetAmount(etBet2);
+        int bet3 = getBetAmount(etBet3);
+        int totalBet = (cbBet1.isChecked() ? bet1 : 0) +
+                (cbBet2.isChecked() ? bet2 : 0) +
+                (cbBet3.isChecked() ? bet3 : 0);
+        int winnings = 0;
+        if (cbBet1.isChecked() && winner == 1) winnings += bet1 ; // Nhân đôi tiền thắng
+        if (cbBet2.isChecked() && winner == 2) winnings += bet2 ;
+        if (cbBet3.isChecked() && winner == 3) winnings += bet3 ;
+
+        int lostAmount = totalBet - winnings; // Số tiền thua
+
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null; // Giải phóng tài nguyên
+        }
+
+        Intent intent = new Intent(GameActivity.this, ResultActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("winner_duck", winner);
+        bundle.putInt("bet1", bet1);
+        bundle.putInt("bet2", bet2);
+        bundle.putInt("bet3", bet3);
+        bundle.putInt("winnings", winnings);
+        bundle.putInt("lostAmount", lostAmount);
+        bundle.putInt("balance", balance);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private void updateBalance(int winner) {
@@ -169,6 +267,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void resetGame() {
+        soundEffect.start();
         raceRunning = false;
         resetSeekBars();
 
