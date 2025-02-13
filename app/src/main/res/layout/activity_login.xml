@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:hint="name"
         android:inputType="text"
+        android:textColor="@android:color/black"
         android:padding="12dp"
         android:background="@drawable/duck_edittext_background"
         android:layout_marginBottom="8dp"/>
@@ -36,6 +37,7 @@
         android:layout_height="wrap_content"
         android:hint="passcode"
         android:inputType="textPassword"
+        android:textColor="@android:color/black"
         android:padding="12dp"
         android:background="@drawable/duck_edittext_background"
         android:layout_marginBottom="16dp"/>
