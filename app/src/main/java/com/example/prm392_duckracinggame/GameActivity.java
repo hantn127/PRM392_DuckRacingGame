@@ -1,5 +1,6 @@
 package com.example.prm392_duckracinggame;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -22,6 +23,7 @@ public class GameActivity extends AppCompatActivity {
     private CheckBox cbBet1, cbBet2, cbBet3;
     private EditText etBet1, etBet2, etBet3;
     private TextView tvBalance;
+    private TextView nameid;
 
     private int balance = 1000; // Số dư ban đầu
     private boolean raceRunning = false;
@@ -45,9 +47,14 @@ public class GameActivity extends AppCompatActivity {
         etBet2 = findViewById(R.id.etBet2);
         etBet3 = findViewById(R.id.etBet3);
         tvBalance = findViewById(R.id.tvInitialBalance);
+        nameid = findViewById(R.id.nameid);
 
         // Cập nhật số dư ban đầu
         tvBalance.setText("💰 Balance: $" + balance);
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("nameid");
+        nameid.setText("🏆 Name: " + name);
 
         // Vô hiệu hóa ô nhập tiền ban đầu
         etBet1.setEnabled(false);

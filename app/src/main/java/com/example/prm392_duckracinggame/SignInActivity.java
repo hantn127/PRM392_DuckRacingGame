@@ -97,6 +97,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         Toast.makeText(this, "Login successful!", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, MainActivity.class);
+        String name = userName.getText().toString();
+        intent.putExtra("username", name);
         startActivity(intent);
         finish();
     }
