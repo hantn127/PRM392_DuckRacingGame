@@ -30,7 +30,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView nameid;
 
     private int balance; // Số dư hiện tại
-    private final int INITIAL_BALANCE = 1000; // Số dư ban đầu
+    private int INITIAL_BALANCE = 1000; // Số dư ban đầu
     private boolean raceRunning = false;
     private Handler handler = new Handler();
     private Random random = new Random();
@@ -286,7 +286,7 @@ public class GameActivity extends AppCompatActivity {
         btnReset.setEnabled(true); // Vô hiệu hóa lại nút Reset
 
         // **Reset lại số dư về giá trị ban đầu**
-        balance = INITIAL_BALANCE;
+//        balance = INITIAL_BALANCE;
         updateBalanceDisplay();
 
         // **Cho phép chọn checkbox và nhập tiền lại sau khi reset**
